@@ -10,28 +10,49 @@ this.isDeleting = false;
 
 // Type Method
 TypeWriter.prototype.type = function() {
-  // Current index of words
+  // Récupere l'index du mot actuel
   const current = this.wordIndex % this.words.length;
-  // Get full text of current word
+  // récupere le mot actuelle
   const fulltxt = this.words[current];
 
   // Check if deleting avec this.isDeleting
 
   if(this.isDeleting) {
-    // si supprimé on enleve le data-word
+    // retire une lettre
     this.txt = fulltxt.substring( 0, this.txt.length - 1);
 
   } else {
-    // sinon on ajoute un data-word
+    // sinon on ajoute une lettre
     this.txt = fulltxt.substring(0 , this.txt.length + 1);
   }
 
   // Insert txt into element
   this.txtElement.innerHTML = `<span class="txt">${this.txt}</span>`;
 
+  //Initial Type speed
+  let typeSpeed = 300;
+
+  if(this.deleting){
+    typeSpeed = typeSpeed / 2 ;
+  }
+
+  // if word est complet
+  if(!this.isDeleting && this.txt === fulltxt ) {
+    //Make pause at end
+    typeSpeed = this.wait;
+    //Set delete to true
+    this.isDeleting = true;
+  } else if (this.isDeleting && this.txt === '') {
+    this.isDeleting = false ;
+    // Move to the next word
+    this.wordIndex++;
+    //Pause avant de taper
+    typeSpeed = 500;
+  }
+//vitesse d'écriture
   setTimeout(() => this.type(), 250);
 }
-// Init on dom load
+// quand tout a charger lance la fonction init
 document.addEventListener('DOMContentLoaded', init);
 
 // Init APP

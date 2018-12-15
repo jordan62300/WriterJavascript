@@ -29,6 +29,14 @@ h2{
   font-size: 2rem;
   color:#aaa;
 }
+
+.txt-type > .txt {
+  border-right: 0.2rem solid #777;
+}
+
+span {
+  color: coral;
+}
 @media(min-width: 1200px) {
   h1 {
     font-size: 5rem;
